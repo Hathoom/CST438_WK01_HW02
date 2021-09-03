@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -31,6 +32,8 @@ public class LandingActivity extends AppCompatActivity {
 
     private JsonPlaceHolderApi jsonPlaceHolderApi;
 
+    private String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +42,11 @@ public class LandingActivity extends AppCompatActivity {
         textViewResult = findViewById(R.id.text_view_result);
         usernameDisplay = findViewById(R.id.username_display);
 
-        String username = getIntent().getStringExtra("username");
+        //String username = getIntent().getStringExtra("username");
 
-        usernameDisplay.setText(username);
+        userId = String.valueOf(getIntent().getIntExtra("userId", -1));
+
+        usernameDisplay.setText(userId);
 
         // will prevent Patch from ignoring null
         Gson gson = new GsonBuilder().serializeNulls().create();
@@ -59,9 +64,7 @@ public class LandingActivity extends AppCompatActivity {
 
     private void getPosts() {
         Map<String, String> parameters = new HashMap<>();
-        parameters.put("userId", "1");
-        parameters.put("_sort", "id");
-        parameters.put("_order", "desc");
+        parameters.put("userId", userId);
 
         Call<List<Post>> call = jsonPlaceHolderApi.getPosts(parameters);
 
@@ -74,6 +77,7 @@ public class LandingActivity extends AppCompatActivity {
                     return;
                 }
 
+                //Log.d("test", response.body().toString());
 
                 List<Post> posts = response.body();
 
