@@ -22,5 +22,17 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.example.wk01_hw02", appContext.getPackageName());
+
+        // user test and password
+        User user = new User("Bret");
+
+        assertEquals("Bret", user.getuserName());
+
+        String password = "password";
+
+        assertEquals("password", password);
+
+
+
     }
 }
